@@ -1,4 +1,6 @@
-import { Client } from 'pg';
+import {
+  Client
+} from 'pg';
 import Core from './core';
 
 export default class PostgreSQL extends Core {
@@ -6,9 +8,14 @@ export default class PostgreSQL extends Core {
     super(options);
   }
   async initialize() {
-    const { host, port, username, password, database } = this;
+    const {
+      host,
+      port,
+      username,
+      password,
+      database
+    } = this;
 
-    this.dump();
 
     this.client = new Client({
       user: username,
@@ -17,9 +24,10 @@ export default class PostgreSQL extends Core {
       password,
       port
     });
-
     try {
       await this.client.connect();
+      this.dump();
+
     } catch (err) {
       throw new Error(`Database ${database} doesn't exist`);
     }
